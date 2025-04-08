@@ -50,6 +50,7 @@ These three computer vision algorithms are powerful tools for feature detection,
 1. **SIFT** provides robust feature detection and matching between images that is invariant to scale, rotation, and illumination changes, but is computationally expensive.
 
 2. **SURF** offers a faster alternative to SIFT with comparable accuracy, making it suitable for real-time applications where speed is important.
+
 Both are used in computer vision applications such as image stitching, 3d reconstruction, image retrieval, etc.
 
 3. **Harris Corner Detection** effectively detect corners within an image which can be used for Object Recognition and Tracking, Image Registration and Alignment, etc.
