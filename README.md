@@ -12,7 +12,6 @@ The Scale-Invariant Feature Transform (SIFT) algorithm is used to detect and mat
 
 ### Code Implementation
 
-```python
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
