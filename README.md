@@ -10,57 +10,48 @@ This repository contains implementations of three computer vision algorithms for
 
 The Scale-Invariant Feature Transform (SIFT) algorithm is used to detect and match keypoints between two images, regardless of scaling, rotation, or illumination changes.
 
-### Code Implementation
-
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Load the images in grayscale
-img1 = cv2.imread('acacia3.png', cv2.IMREAD_GRAYSCALE)
-img2 = cv2.imread('acacia.jpg', cv2.IMREAD_GRAYSCALE)
-
-# Initialize SIFT detector
-sift = cv2.SIFT_create()
-
-# Detect keypoints and descriptors
-kp1, des1 = sift.detectAndCompute(img1, None)
-kp2, des2 = sift.detectAndCompute(img2, None)
-
-# Match descriptors using FLANN-based matcher
-FLANN_INDEX_KDTREE = 1
-index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=15)
-search_params = dict(checks=100)
-
-flann = cv2.FlannBasedMatcher(index_params, search_params)
-matches = flann.knnMatch(des1, des2, k=2)
-
-# Apply Lowe's ratio test
-good_matches = []
-for m, n in matches:
-    if m.distance < 0.7 * n.distance:
-        good_matches.append(m)
-
-# Good matches
-result = cv2.drawMatches(img1, kp1, img2, kp2, good_matches, None, flags=2)
-
-kp1_count = len(kp1)  # Get the number of keypoints in the first image
-kp2_count = len(kp2)  # Get the number of keypoints in the second image
-
-# Result
-plt.figure(figsize=(12, 9))
-plt.title(f"SIFT Feature Matching: {len(good_matches)} matches, Keypoints: ({kp1_count}, {kp2_count})")  
-plt.imshow(result)
-plt.axis('off')
-plt.show()
-
 ### Results and Observations
 
-![SIFT Output](Result/sift1.png)
+![SIFT Results](Result/sift.png)
 
 **Observations:**
 - The SIFT algorithm detected 6351 keypoints in the first image and 11683 in the second image.
 - After applying the ratio test, 17 good matches were found between the two images.
 - The algorithm successfully matched features despite differences in viewpoint and lighting.
 
+## 2. SURF Algorithm Implementation
 
+The Speeded-Up Robust Features (SURF) algorithm is a faster alternative to SIFT that also provides scale and rotation invariance.
+
+### Results and Observations
+
+![SURF Results](Result/surf.png)
+
+**Observations:**
+- With max features as 5000, 73 good matches were found between the images.
+- SURF was noticeably faster than SIFT while maintaining good matching quality.
+
+## 3. Harris Corner Detection
+Harris Corner Detection is an algorithm used to detect corners within an image and is based on the idea that corners can be detected by looking for significant changes in intensity in all directions.
+
+### Results and Observations
+
+![Harris corner Results](Result/harris1.png)
+![Harris corner Results](Result/harris2.png)
+
+**Observations:**
+- Succesfully detected the obstacles on the road.
+- By decreasing blocksize, ksize and threshold the algorithm detected more features.
+
+## Conclusion
+
+These three computer vision algorithms are powerful tools for feature detection, matching, and geometric transformation estimation:
+
+1. **SIFT** provides robust feature detection and matching between images that is invariant to scale, rotation, and illumination changes, but is computationally expensive.
+
+2. **SURF** offers a faster alternative to SIFT with comparable accuracy, making it suitable for real-time applications where speed is important.
+Both are used in computer vision applications such as image stitching, 3d reconstruction, image retrieval, etc.
+
+3. **Harris Corner Detection** effectively detect corners within an image which can be used for Object Recognition and Tracking, Image Registration and Alignment, etc.
+
+Each algorithm has its strengths and optimal use cases, and parameter tuning significantly affects their performance characteristics.
