@@ -57,7 +57,7 @@ plt.show()
 
 ### Results and Observations
 
-![SIFT Default Results](Result/sift1.png)
+![image](Result/sift1.png)
 
 **Observations:**
 - The SIFT algorithm detected 6351 keypoints in the first image and 11683 in the second image.
